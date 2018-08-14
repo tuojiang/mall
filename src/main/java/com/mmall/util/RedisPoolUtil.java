@@ -45,7 +45,7 @@ public class RedisPoolUtil {
         String result=null;
         try {
             jedis = RedisPool.getJedis();
-            result = (String) jedis.setex(key,exTime,value);
+            result = jedis.setex(key,exTime,value);
         }catch (Exception e){
             log.error("expire key:{} value:{} error",key,value,e);
             RedisPool.returnBrokenResource(jedis);
