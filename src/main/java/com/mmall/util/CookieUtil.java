@@ -37,7 +37,8 @@ public class CookieUtil {
         Cookie ck = new Cookie(COOKIE_NAME, token);
         ck.setDomain(COOKIE_DOMAIN);
         ck.setPath("/");
-        ck.setHttpOnly(true);
+        /**设置后禁止脚本访问，增加安全性*/
+//        ck.setHttpOnly(true);
         /**如果这个maxage不设置的话，cookie就不会写入硬盘，而是写在内存。只在当前页面有效。*/
         ck.setMaxAge(60 * 60 * 24 * 365);
         log.info("write cookieName:{},cookieValue:{}", ck.getName(), ck.getValue());
