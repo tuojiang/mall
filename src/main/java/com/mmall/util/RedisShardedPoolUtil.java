@@ -55,6 +55,27 @@ public class RedisShardedPoolUtil {
         RedisShardedPool.retunrResource(jedis);
         return result;
     }
+
+    /**
+     * 如果不存在就设置key和value
+     * @param key
+     * @param value
+     * @return
+     */
+    public static Long setnx(String key,String value){
+        ShardedJedis jedis=null;
+        Long result=null;
+        try {
+            jedis = RedisShardedPool.getJedis();
+            result = jedis.setnx(key,value);
+        }catch (Exception e){
+            log.error("expire key:{} value:{} error",key,value,e);
+            RedisShardedPool.returnBrokenResource(jedis);
+            return result;
+        }
+        RedisShardedPool.retunrResource(jedis);
+        return result;
+    }
     /**
      * 获取key对应的值
      * @param key
@@ -75,6 +96,26 @@ public class RedisShardedPoolUtil {
         return result;
     }
 
+    /**
+     * 设置新值并且返回旧值
+     * @param key
+     * @param value
+     * @return
+     */
+    public static String getSet(String key,String value){
+        ShardedJedis jedis = null;
+        String result = null;
+        try {
+            jedis = RedisShardedPool.getJedis();
+            result = jedis.getSet(key,value);
+        } catch (Exception e) {
+            log.error("get key:{} error",key,value,e);
+            RedisShardedPool.returnBrokenResource(jedis);
+            return result;
+        }
+        RedisShardedPool.retunrResource(jedis);
+        return result;
+    }
     /**
      * 修改key中的值
      * @param key
